@@ -1,0 +1,176 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      .msg_board {
+        border-radius: 4px;
+        margin-top: 5px;
+        margin-bottom: 5px;
+        height: 268px;
+      }
+      .msg_send {
+        margin-top: 10px;
+        margin-bottom: 10px;
+      }
+      #con2 {
+        vertical-align: bottom;
+        margin-bottom: 5px;
+      }
+      #send2 {
+        vertical-align: top;
+        height: 40px;
+      }
+    </style>
+    <title>Client</title>
+  </head>
+  <body onselectstart="return false">
+    <div id="titlebar">
+      <button @click="minimize" class="min"></button
+      ><button @click="quit" class="exit"></button>
+      <div class="title">Client</div>
+    </div>
+    <div class="board" id="board">
+      <div id="c_menu">
+        <div>
+          <el-select
+            v-model="cli_value"
+            placeholder="请选择主机"
+            style="width: 130px"
+          >
+            <el-option
+              v-for="cli in cli_options"
+              :key="cli.value"
+              :label="cli.label"
+              :value="cli.value"
+            >
+            </el-option>
+          </el-select>
+          <el-button v-if="state" @click="con" :plain="true" type="primary" id="con2"
+            >连接到</el-button
+          >
+          <el-button v-else @click="close" :plain="true" type="primary" id="con2"
+            >断开至</el-button
+          >
+          <el-select
+            v-model="sw_value"
+            placeholder="请选择交换机"
+            style="width: 140px"
+          >
+            <el-option
+              v-for="sw in sw_options"
+              :key="sw.value"
+              :label="sw.label"
+              :value="sw.value"
+            >
+            </el-option>
+          </el-select>
+        </div>
+        <div style="vertical-align: top">
+          <el-input
+            type="text"
+            placeholder="请输入主机MAC"
+            v-model="cli_mac"
+            maxlength="12"
+            style="width: 220px"
+            clearable
+            show-word-limit
+          >
+          </el-input>
+          <el-select
+            v-model="cli_inter"
+            placeholder="接口号"
+            style="width: 88px"
+          >
+            <el-option
+              v-for="p in inter_options"
+              :key="p.value"
+              :label="p.label"
+              :value="p.value"
+            >
+            </el-option>
+          </el-select>
+          <el-tooltip
+            v-if="state"
+            style="margin: 4px"
+            content="尚未连接交换机"
+            placement="bottom-end"
+          >
+            <div
+              class="el-icon-warning"
+              style="font-size: 40px; color: rgb(209, 209, 209)"
+            ></div>
+          </el-tooltip>
+          <el-tooltip
+            v-else
+            style="margin: 4px"
+            content="已连接交换机"
+            placement="bottom-end"
+          >
+            <div
+              class="el-icon-success"
+              style="font-size: 40px; color: rgb(99, 183, 238)"
+            ></div>
+          </el-tooltip>
+        </div>
+        <div class="message">
+          <div class="msg_board">
+            <el-card :body-style="{ padding: '0px' }">
+              <el-table
+                :data="table_msg"
+                height="267"
+                :header-cell-style="{padding:'0px'}"
+              >
+                <el-table-column
+                  prop="content"
+                  label="MSG"
+                  align="center"
+                  :cell-style="{padding:'0px'}"
+                >
+                </el-table-column>
+              </el-table>
+            </el-card>
+          </div>
+          <div class="msg_send">
+            <el-input
+              type="text"
+              placeholder="请输入目的主机MAC"
+              v-model="target_mac"
+              style="width: 290px"
+              clearable
+              :disabled="target_msg_en"
+            ></el-input>
+            <el-button
+              @click="send"
+              :plain="true"
+              type="primary"
+              id="send2"
+              :disabled="target_msg_en"
+              >发送</el-button
+            >
+            <el-input
+              type="text"
+              placeholder="请输入待发送的消息"
+              v-model="target_msg"
+              clearable
+              :disabled="target_msg_en"
+            ></el-input>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- <div class="footer">All Rights Reserved ©Void7</div> -->
+  </body>
+  <script src="./cli-renderer.js"></script>
+</html>

@@ -1,0 +1,108 @@
+<html>
+<head>
+  <meta charset="UTF-8" />
+  <meta http-equiv="Content-Security-Policy"
+    content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'" />
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css" />
+  <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+  <link rel='stylesheet' href="style.css">
+  <title>Server</title>
+  <style>
+    #s_menu {
+      vertical-align: top;
+      display: flex;
+      justify-content: space-evenly;
+    }
+
+    .table {
+      margin-top: 20px;
+      margin-left: 24px;
+      margin-right: 24px;
+    }
+
+    #mac {
+      display: flex;
+      float: left;
+      /* border: 1px solid; */
+      width: 320px;
+      height: 500px;
+    }
+    #log {
+      display: flex;
+      float: right;
+      /* border: 1px solid; */
+      width: 320px;
+      height: 500px;
+    }
+    .el-card{
+      width: 320px;
+    }
+  </style>
+</head>
+<!-- onselectstart 设置文字不可选中 -->
+<body onselectstart="return false">
+  <div id="titlebar">
+    <button class="min" @click="minimize"></button><button class="exit" @click="quit"></button>
+    <div class="title">
+      Server
+    </div>
+  </div>
+  <div class="board" id="board">
+    <div id="s_menu">
+      <div>
+        <el-select v-model="value" placeholder="请选择交换机" style="width:140px" :disabled="select_en">
+          <el-option v-for="item in options" :key="item.value" :label="item.label" :value="item.value">
+          </el-option>
+        </el-select>
+        <el-button :plain="false" @click="listen" type="primary" round
+          style="vertical-align: top;height: 40px;margin-left: 10px;">开启监听</el-button>
+
+        <el-button :plain="true" @click="close" type="primary" round style="vertical-align: top;height: 40px;">关闭监听
+        </el-button>
+        <el-popover width="170" trigger="hover" content="将本机与另一交换机相连接" visible-arrow="true">
+          <el-button slot="reference" :plain="true"  @click="dialogVisible = true" type="primary" round style="vertical-align: top;height: 40px;">交换机相连
+          </el-button>
+        </el-popover placement="top">
+        <!-- 配置两交换机连接接口的Dialog -->
+        <el-dialog width="27%" title="交换机相连" :visible.sync="dialogVisible" center>
+              <el-select v-model="sw_con_inter" placeholder="请选择接口号" style="width:148px;">
+                <el-option v-for="p in sw_con_inter_options" :key="p.value" :label="p.label" :value="p.value"></el-option>
+              </el-select>       
+          <div slot="footer" class="dialog-footer">
+            <el-button @click="dialogVisible = false">取消</el-button>
+            <el-button type="primary" @click="sw_con">确定</el-button>
+          </div>
+        </el-dialog>
+        <!-- <el-button id="broadcast" round>广播问候</el-button>
+          <el-button id="unicast" round>单播问候</el-button> -->
+      </div>
+    </div>
+    <div class="table" id='table_body'>
+
+      <div id="mac">
+        <el-card :body-style="{ padding: '0px' }">
+          <el-table :data="table_mac" height="500" >
+            <el-table-column prop="mac" label="MAC" align="center" width="150">
+            </el-table-column>
+            <el-table-column prop="port" label="PORT" align="center">
+            </el-table-column>
+            <el-table-column prop="ttl" label="TTL" align="center">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </div>
+
+      <div id="log">
+        <el-card :body-style="{ padding: '0px' }">
+          <el-table :data="table_log" height="500">
+            <el-table-column prop="content" label="EVENTS" align="center" :cell-style="{padding:'8px'}">
+            </el-table-column>
+          </el-table>
+        </el-card>
+      </div>
+    </div>
+  </div>
+  <script src="./renderer.js"></script>
+</body>
+</html>

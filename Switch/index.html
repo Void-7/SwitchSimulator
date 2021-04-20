@@ -1,0 +1,98 @@
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src *; style-src 'self' http://* 'unsafe-inline'; script-src 'self' http://* 'unsafe-inline' 'unsafe-eval'"
+    />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <link rel="stylesheet" href="style.css" />
+    <title>Switch Simulator</title>
+    <style>
+      .logo {
+        margin-top: 18px;
+        display: flex;
+        padding-left: 70px;
+        padding-right: 70px;
+        justify-content: space-between;
+        text-align: center;
+      }
+      .info {
+        font-family: Cambria, Cochin, Georgia, Times, "Times New Roman", serif;
+        font-size: 20px;
+        color: rgb(94, 94, 94);
+        text-align: center;
+        margin-top: 10px;
+        padding: 10px;
+      }
+      .conf {
+        display: flex;
+        justify-content: space-between;
+      }
+      .conf_butt {
+        margin-top: 20px;
+        text-align: center;
+      }
+      #index_body {
+        height: 340px;
+      }
+    </style>
+  </head>
+  <body onselectstart="return false">
+    <div id="titlebar">
+      <button @click="minimize" class="min"></button
+      ><button @click="quit" class="exit"></button>
+      <div class="title">Switch Simulator</div>
+    </div>
+    <div class="board" id="index_body">
+      <div class="logo">
+        <div class="school">
+          <el-image
+            :src="school"
+            style="width: 100px; height: 100px; border-radius: 50%"
+          ></el-image>
+        </div>
+        <div class="avatar">
+          <el-image
+            :src="avatar"
+            style="width: 100px; height: 100px; border-radius: 50%"
+          ></el-image>
+        </div>
+      </div>
+      <div class="info">
+        <p>Computer Networks Experiment</p>
+      </div>
+      <div class="conf">
+        <el-input
+          type="text"
+          placeholder="Set port for sw-1"
+          v-model="port1"
+          maxlength="5"
+          style="width: 180px"
+          clearable
+        >
+        </el-input>
+        <el-input
+          type="text"
+          placeholder="Set port for sw-2"
+          v-model="port2"
+          maxlength="5"
+          style="width: 180px"
+          clearable
+        >
+        </el-input>
+      </div>
+      <div class="conf_butt">
+        <el-button @click="start" type="primary" round>Start</el-button>
+      </div>
+    </div>
+    <div class="footer">All Rights Reserved ©Void-7</div>
+    <script src="./index-renderer.js"></script>
+  </body>
+</html>
