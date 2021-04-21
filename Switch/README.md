@@ -7,10 +7,11 @@
 This is an **Electron** application with **Vue & Element-UI** frameworks.
 
 FUNCTIONS *to be implemented*:
-- [ ] 主机更换MAC地址
-- [ ] 主机和交换机断开连接后各自表项的清理
+- [ ] 主机消息发送后输入框清空
+- [ ] socket连接前后界面中相关按钮的禁用状态维护
 - [ ] 核心过程用Canvas动画表现（加一个新的渲染窗口和主进程通信控制？暂定）
-- [ ] 交换机和主机界面相关按钮在连接前后的禁用状态维护
+- [x] 交换机和主机界面相关按钮在连接前后的禁用状态维护
+- [x] 主机更换MAC地址
 - [x] 客户端断开连接按钮，断开前维护服务器的连接池（交换机）
 - [x] MAC缓存表项的老化时间TTL
 - [x] 交换机互连(分别选择接口号创建client连接对方server)
