@@ -222,6 +222,7 @@ board = new Vue({
         date:new Date().toString()
       });
       x.sk.write(msg);
+      this.target_msg='';
     },
     edit_mac(){
       this.edit_mac_popover_en=false;
