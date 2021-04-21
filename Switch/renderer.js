@@ -18,7 +18,7 @@ let sflag = 0;
 
 let Timer=setInterval(()=>{
   if(board.table_mac.length){
-    console.log(">>>帧交换表有记录，更新每一项...")
+    // console.log(">>>帧交换表有记录，更新每一项...")
     board.table_mac.forEach((e,i,t)=>{
       if(e.ttl-1>0){
         e.ttl--;//帧交换记录的老化时间每秒自减
@@ -26,9 +26,10 @@ let Timer=setInterval(()=>{
         t.splice(i,1);//删除从索引i开始的一项记录，即老化的帧交换记录项
       }
     })
-  }else{
-    console.log(">>>帧交换表暂无记录...")
   }
+  // else{
+  //   console.log(">>>帧交换表暂无记录...")
+  // }
 },1000);
 
 
@@ -50,13 +51,19 @@ function core(msg) {
       found = 1;
     }
   });
-  if (!found)
+  if (!found){
     //表中不存在源地址项，压入表中
     board.table_mac.push({
       mac: msg.src,
       port: msg.interface,
       ttl: 60,
     });
+    board.$nextTick(() => {
+      let container = board.$el.querySelectorAll(".el-table__body-wrapper");
+      // console.log(container[0]);//第二个是table_log 第一个是table_mac
+      container[0].scrollTop = container[0].scrollHeight;
+    });
+  }
 
   found = 0; //重新用于记录表中是否存在目标地址的标志位
   let dst = msg.dst;
@@ -129,7 +136,7 @@ function sw_connection() {
     } else if (msg.type == "data") {
       msg.interface = s.SW_IN_INTER;
       console.log(
-        `交换机${s.ID}从接口${s.SW_IN_INTER}收到另一台交换机转发的数据包：${msg}`
+        `交换机${s.ID}从接口${s.SW_IN_INTER}收到另一台交换机转发的数据包：${msg.content}`
       ); //模拟的效果上是从IN_INTER转发过来的
       core(msg);
     }
@@ -165,6 +172,12 @@ function pool_maintain(c) {
 function add_log(msg) {
   board.table_log.push({
     content: msg,
+  });
+  //日志表格收到新消息就滚动到底部
+  board.$nextTick(() => {
+    let container = board.$el.querySelectorAll(".el-table__body-wrapper");
+    // console.log(container[1]);//第二个是table_log 第一个是table_mac
+    container[1].scrollTop = container[1].scrollHeight;
   });
 }
 

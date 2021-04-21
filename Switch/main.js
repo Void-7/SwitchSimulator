@@ -49,10 +49,7 @@ function createWindow() {
 }
 
 app.whenReady().then(() => {
-  createIndexWindow();
-  // createWindow();createWindow();//两个交换机进程
-  // for(let i=0;i<6;i++)  createClientWindow();//六个主机进程
-  // createClientWindow();
+  createIndexWindow();  //配置界面
   app.on("activate", function () {
     if (BrowserWindow.getAllWindows().length === 0) createWindow();
   });
@@ -77,18 +74,15 @@ ipcMain.on("quit", (e, v) => {
 });
 
 ipcMain.on("start", (e, json) => {
-  //console.log(`主进程收到${json.id}消息，打开八个进程窗口`);
   //将初始界面设置好的交换机监听端口号通过ipc通信存入主进程的port数组、
   port[0] = json.port1;
   port[1] = json.port2;
   console.log(`主进程收到监听端口配置：${json.port1}、${json.port2}`);
   let tmpWindow = BrowserWindow.fromId(json.id);
   if (tmpWindow != null) {
-    // for (let i = 0; i < 6; i++) createClientWindow(); //六个主机进程
+    for (let i = 0; i < 4; i++) createClientWindow(); //六个主机进程
     createWindow(); //两个交换机进程
     createWindow();
-    createClientWindow();createClientWindow();
-    createClientWindow();createClientWindow();
     console.log(`主进程收到${json.id}消息，关闭初始配置窗口`);
     tmpWindow.destroy();
   }

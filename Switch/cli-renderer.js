@@ -51,7 +51,19 @@ class PC {
         if(msg.dst==this.mac){
           board.table_msg.push({
             content:`源${msg.src}：${msg.content} | ${msg.date}`
-          })
+          });
+          //消息表格收到新消息就滚动到底部
+          board.$nextTick(() => {
+            let container = board.$el.querySelector(".el-table__body-wrapper");
+            container.scrollTop = container.scrollHeight;
+          });
+        }else{
+          board.$notify.info({
+            title: "系统消息",
+            showClose: true,
+            message: `客户端收到一条目的MAC与本机不同的消息，丢弃。`,
+            position: "top-right",
+          });
         }
       }
       // console.log(`客户端${this.mac}收到数据：` + data);
@@ -82,11 +94,6 @@ board = new Vue({
   el: "#board",
   data: {
     table_msg: [
-    //   {
-    //   content: "主机x给本机发送了一条消息:what the hell r u f***ing saying?"
-    // }, {
-    //   content: "主机y给本机发送了一条消息:this exp is too shithole"
-    // },
     ]
     ,
     target_msg_en: true,
@@ -149,6 +156,7 @@ board = new Vue({
     ],
     sw_value: undefined,
     state:true,
+    edit_mac_popover_en:false,
   },
   methods: {
     con() {
@@ -214,6 +222,18 @@ board = new Vue({
         date:new Date().toString()
       });
       x.sk.write(msg);
+    },
+    edit_mac(){
+      this.edit_mac_popover_en=false;
+      if(x){
+        x.mac=this.cli_mac;
+        this.$notify.success({
+          title: "提示",
+          showClose: true,
+          message: `PC${this.cli_value}的MAC地址已经修改为${x.mac}！`,
+          position: "bottom-left",
+        });
+      }
     }
   },
 });

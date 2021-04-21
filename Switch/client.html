@@ -32,6 +32,9 @@
         vertical-align: top;
         height: 40px;
       }
+      .el-icon-warning {
+        margin: 0px !important;
+      }
     </style>
     <title>Client</title>
   </head>
@@ -57,10 +60,20 @@
             >
             </el-option>
           </el-select>
-          <el-button v-if="state" @click="con" :plain="true" type="primary" id="con2"
+          <el-button
+            v-if="state"
+            @click="con"
+            :plain="true"
+            type="primary"
+            id="con2"
             >连接到</el-button
           >
-          <el-button v-else @click="close" :plain="true" type="primary" id="con2"
+          <el-button
+            v-else
+            @click="close"
+            :plain="true"
+            type="primary"
+            id="con2"
             >断开至</el-button
           >
           <el-select
@@ -77,21 +90,40 @@
             </el-option>
           </el-select>
         </div>
-        <div style="vertical-align: top">
+        <div style=" display: flex">
+          <el-popover placement="bottom" v-model="edit_mac_popover_en">
+            <p>确定修改主机MAC为当前填写值吗？</p>
+            <div style="text-align: right; margin: 0">
+              <el-button size="mini" type="text" @click="edit_mac_popover_en = false"
+                >取消</el-button
+              >
+              <el-button type="primary" size="mini" @click="edit_mac"
+                >确定</el-button
+              >
+            </div>
+            <el-button
+            slot="reference"
+              :plain="true"
+              type="primary"
+              icon="el-icon-edit"
+              style="height: 40px;margin-right:5px;"
+            ></el-button
+          >
+            </el-popover>
+            
           <el-input
             type="text"
             placeholder="请输入主机MAC"
             v-model="cli_mac"
             maxlength="12"
-            style="width: 220px"
+            style="width: 164px;margin-right:5px;"
             clearable
-            show-word-limit
           >
           </el-input>
           <el-select
             v-model="cli_inter"
             placeholder="接口号"
-            style="width: 88px"
+            style="width: 88px; margin-bottom: 0px;margin-right:5px;"
           >
             <el-option
               v-for="p in inter_options"
@@ -109,7 +141,7 @@
           >
             <div
               class="el-icon-warning"
-              style="font-size: 40px; color: rgb(209, 209, 209)"
+              style="font-size: 40px; color: rgb(209, 209, 209); height: 40px"
             ></div>
           </el-tooltip>
           <el-tooltip
@@ -120,7 +152,7 @@
           >
             <div
               class="el-icon-success"
-              style="font-size: 40px; color: rgb(99, 183, 238)"
+              style="font-size: 40px; color: rgb(99, 183, 238); height: 40px"
             ></div>
           </el-tooltip>
         </div>
@@ -148,6 +180,7 @@
               placeholder="请输入目的主机MAC"
               v-model="target_mac"
               style="width: 290px"
+              maxlength="12"
               clearable
               :disabled="target_msg_en"
             ></el-input>
