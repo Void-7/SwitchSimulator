@@ -18,7 +18,7 @@
         border-radius: 4px;
         margin-top: 5px;
         margin-bottom: 5px;
-        height: 268px;
+        height: 275px;
       }
       .msg_send {
         margin-top: 10px;
@@ -26,7 +26,6 @@
       }
       #con2 {
         vertical-align: bottom;
-        margin-bottom: 5px;
       }
       #send2 {
         vertical-align: top;
@@ -34,6 +33,9 @@
       }
       .el-icon-warning,.el-icon-success {
         margin: 0px !important;
+      }
+      .line{
+        margin-bottom: 8px;
       }
     </style>
     <title>Client</title>
@@ -46,7 +48,7 @@
     </div>
     <div class="board" id="board">
       <div id="c_menu">
-        <div>
+        <div class="line">
           <el-select
             v-model="cli_value"
             placeholder="请选择主机"
@@ -161,7 +163,7 @@
             <el-card :body-style="{ padding: '0px' }">
               <el-table
                 :data="table_msg"
-                height="267"
+                height="274"
                 :header-cell-style="{padding:'0px'}"
               >
                 <el-table-column

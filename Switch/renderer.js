@@ -384,6 +384,9 @@ board = new Vue({
         sw_connection();
       }
     },
+    clean_table_log(){
+      this.table_log=[];
+    }
   },
 });
 

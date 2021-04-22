@@ -62,7 +62,7 @@ div {
 }
 .el-select {
   vertical-align: bottom;
-  margin-bottom: 5px;
+  /* margin-bottom: 5px; */
 }
 
 ::-webkit-scrollbar {

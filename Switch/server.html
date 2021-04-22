@@ -38,6 +38,9 @@
     .el-card{
       width: 320px;
     }
+    .el-icon-delete {
+        margin: 0px !important;
+      }
   </style>
 </head>
 <!-- onselectstart 设置文字不可选中 -->
@@ -60,10 +63,11 @@
 
         <el-button :plain="true" @click="close" type="primary" round style="vertical-align: top;height: 40px;">关闭监听
         </el-button>
-        <el-popover width="170" trigger="hover" content="将本机与另一交换机相连接" visible-arrow="true">
-          <el-button slot="reference" :plain="true"  @click="dialogVisible = true" type="primary" round style="vertical-align: top;height: 40px;">交换机相连
-          </el-button>
-        </el-popover placement="top">
+          <el-tooltip effect="dark" content="将本机连接到另一交换机" placement="bottom">
+            <el-button :plain="true"  @click="dialogVisible = true" type="primary" round style="vertical-align: top;height: 40px;">交换机相连
+            </el-button>
+          </el-tooltip>
+        
         <!-- 配置两交换机连接接口的Dialog -->
         <el-dialog width="27%" title="交换机相连" :visible.sync="dialogVisible" center>
               <el-select v-model="sw_con_inter" placeholder="请选择接口号" style="width:148px;">
@@ -74,6 +78,10 @@
             <el-button type="primary" @click="sw_con">确定</el-button>
           </div>
         </el-dialog>
+        
+        <el-tooltip effect="dark" content="清除日志表" placement="bottom">
+          <el-button icon="el-icon-delete" @click="clean_table_log" circle></el-button>
+        </el-tooltip>
         <!-- <el-button id="broadcast" round>广播问候</el-button>
           <el-button id="unicast" round>单播问候</el-button> -->
       </div>

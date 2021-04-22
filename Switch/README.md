@@ -9,7 +9,7 @@ This is an **Electron** application with **Vue & Element-UI** frameworks.
 FUNCTIONS *to be implemented*:
 - [ ] socket连接前后界面中相关按钮的禁用状态维护
 - [ ] 核心过程用Canvas动画表现（加一个新的渲染窗口和主进程通信控制？暂定）
-- [ ] 交换机日志表的清除按钮
+- [x] 交换机日志表的清除按钮
 - [x] 交换机和主机界面相关按钮在连接前后的禁用状态维护
 - [x] 主机更换MAC地址
 - [x] 客户端断开连接按钮，断开前维护服务器的连接池（交换机）
